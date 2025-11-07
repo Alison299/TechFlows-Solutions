@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rastreio de Pedidos - TechFlow</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: grid; place-items: center; min-height: 90vh; background-color: #000000; }
+        .container { background: #fff; border-radius: 8px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; }
+        .form-group input { width: 300px; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; }
+        .btn { width: 100%; padding: 0.75rem; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .btn:hover { background-color: #218838; }
+        .flash { padding: 1rem; margin-bottom: 1rem; border-radius: 4px; }
+        .flash.success { background-color: #d4edda; color: #155724; }
+        .flash.error { background-color: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Rastrear Pedido</h2>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form action="/" method="POST">
+            <div class="form-group">
+                <label for="pedido_id">ID do Pedido:</label>
+                <input type="text" id="pedido_id" name="pedido_id" required>
+            </div>
+            
+            <button type="submit" class="btn">Consultar</button>
+        </form>
+    </div>
+</body>
+</html>
