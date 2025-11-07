@@ -17,8 +17,21 @@ def test_pedido_valido(client):
     assert response.status_code == 200
     assert b'Status do Pedido 12345: Em processamento' in response.data
 
-def test_pedido_invalido(client):
-    response = client.post('/', data={'pedido_id': 'ID_FALSO'}, follow_redirects=True)
+
+def test_pedido_por_nota_fiscal(client):
+    response = client.post('/', data={
+        'pedido_id': '', 
+        'nota_fiscal': 'NF-002'
+    }, follow_redirects=True)
     
     assert response.status_code == 200
-    assert b'Pedido ID_FALSO nao encontrado.' in response.data
+    assert b'Status do Pedido 67890: Enviado' in response.data
+
+def test_pedido_invalido(client):
+    response = client.post('/', data={
+        'pedido_id': 'ID_FALSO',
+        'nota_fiscal': 'NF_FALSA'
+    }, follow_redirects=True)
+    
+    assert response.status_code == 200
+    assert b'Pedido nao encontrado (ID ou Nota Fiscal invalidos).' in response.data
